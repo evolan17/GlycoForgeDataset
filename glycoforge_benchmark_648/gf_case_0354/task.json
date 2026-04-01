@@ -1,0 +1,38 @@
+{
+  "task_id": "gf_case_0354",
+  "task_type": "workflow_recommendation",
+  "task_family": "batch_correction_centric",
+  "complexity_tier": "moderate",
+  "signal_regime": "strong_or_confounded",
+  "task_description": "Recommend a workflow with special attention to batch-effect diagnosis and correction without erasing biology.",
+  "analysis_goal": "Identify differential glycan signals between two biological conditions while handling compositionality, missingness, and batch structure as needed.",
+  "data_files": {
+    "abundance": "abundance.csv",
+    "sample_metadata": "sample_metadata.csv",
+    "feature_metadata": "feature_metadata.csv"
+  },
+  "known_constraints": {
+    "data_type": "relative_abundance_glycomics",
+    "compositionally_closed": true,
+    "missing_values_present": true,
+    "missingness_pattern": "mnar_left_censored",
+    "batch_labels_available": true,
+    "batch_structure_expected": true,
+    "paired_or_coupled_requested": false,
+    "motif_driven_signal_requested": true,
+    "scenario_type": "batch_correction_confounded"
+  },
+  "schema": {
+    "sample_id_col": "sample_id",
+    "group_col": "group_label",
+    "batch_col": "batch_label"
+  },
+  "expected_output": {
+    "type": "structured_workflow_plan",
+    "must_include": [
+      "ordered_tool_sequence",
+      "parameter_choices",
+      "rationale"
+    ]
+  }
+}
