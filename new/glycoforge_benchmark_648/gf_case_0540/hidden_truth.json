@@ -1,0 +1,160 @@
+{
+  "dataset_id": "gf_case_0540",
+  "task_family": "paired_coupled",
+  "complexity_tier": "moderate",
+  "signal_regime": "moderate",
+  "true_conditions": {
+    "batch_injected": true,
+    "missingness_injected": true,
+    "bio_strength": 1.392648,
+    "batch_strength": 0.980092,
+    "missing_fraction_target": 0.272153,
+    "mnar_bias": 1.550372,
+    "motif_driven": true,
+    "paired_or_coupled_requested": true,
+    "paired_or_coupled_realized": false,
+    "confounded_signal": false
+  },
+  "true_labels": {
+    "bio_labels": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "batch_labels": [
+      0,
+      1,
+      0,
+      0,
+      2,
+      2,
+      2,
+      2,
+      1,
+      1,
+      0,
+      1,
+      0,
+      2,
+      1,
+      0,
+      1,
+      2,
+      0,
+      2,
+      1,
+      1,
+      0,
+      2,
+      2,
+      1,
+      1,
+      2,
+      0,
+      0
+    ]
+  },
+  "true_differential": {
+    "feature_ids": [
+      "G036",
+      "G014",
+      "G012",
+      "G027",
+      "G019",
+      "G050",
+      "G088",
+      "G051",
+      "G004",
+      "G069",
+      "G007",
+      "G037",
+      "G062",
+      "G009",
+      "G040",
+      "G092",
+      "G028",
+      "G045",
+      "G011",
+      "G074"
+    ],
+    "ranked": [
+      "G036",
+      "G014",
+      "G012",
+      "G027",
+      "G019",
+      "G050",
+      "G088",
+      "G051",
+      "G004",
+      "G069",
+      "G007",
+      "G037",
+      "G062",
+      "G009",
+      "G040",
+      "G092",
+      "G028",
+      "G045",
+      "G011",
+      "G074"
+    ],
+    "effect_level": "motif_proxy"
+  },
+  "true_workflow_tags": {
+    "needs_imputation": true,
+    "needs_clr": true,
+    "needs_batch_correction": true,
+    "recommended_batch_family": "run_combat",
+    "should_preserve_bio_covariate": true
+  },
+  "scoring_targets": {
+    "expected_plan_requirements": [
+      "include_clr_before_de_for_compositional_data",
+      "impute_when_missing",
+      "batch_correct_before_de",
+      "consider_motif_level_follow_up",
+      "acknowledge_pairing_or_coupling"
+    ],
+    "disallowed_plan_patterns": [
+      "run_differential_expression.*run_combat"
+    ]
+  },
+  "generation": {
+    "requested_mode": "paired_coupled_synthetic",
+    "actual_mode": "single_proxy_from_paired_coupled_synthetic",
+    "degradation": {
+      "paired_coupled": "requested_but_installed_glycoforge_has_no_simulate_paired"
+    }
+  },
+  "glycoforge_metadata": {
+    "path": "glycoforge_metadata.json"
+  }
+}

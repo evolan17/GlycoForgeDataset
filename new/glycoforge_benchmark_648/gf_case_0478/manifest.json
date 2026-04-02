@@ -1,0 +1,338 @@
+{
+  "dataset_id": "gf_case_0478",
+  "task_type": "workflow_recommendation",
+  "task_family": "paired_coupled",
+  "complexity_tier": "simple",
+  "signal_regime": "moderate",
+  "scenario_type": "paired_coupled_mixed",
+  "paths": {
+    "abundance": "abundance.csv",
+    "clr": "clr.csv",
+    "sample_metadata": "sample_metadata.csv",
+    "clean_abundance": "clean_abundance.csv",
+    "clean_clr": "clean_clr.csv",
+    "batch_abundance": "batch_abundance.csv",
+    "batch_clr": "batch_clr.csv",
+    "missing_abundance": "missing_abundance.csv",
+    "missing_clr": "missing_clr.csv",
+    "glycoforge_metadata": "glycoforge_metadata.json",
+    "task": "task.json",
+    "feature_metadata": "feature_metadata.csv"
+  },
+  "schema": {
+    "sample_id_col": "sample_id",
+    "group_col": "group_label",
+    "batch_col": "batch_label"
+  },
+  "dataset_summary": {
+    "n_samples": 40,
+    "n_features": 80,
+    "has_missing_values": true,
+    "missing_fraction_observed": 0.2075,
+    "has_batch_labels": true,
+    "n_batches": 2,
+    "is_compositional": true,
+    "has_clr_matrix": true,
+    "source": "glycoforge"
+  },
+  "task": {
+    "objective": "Identify differential glycan signals between two biological conditions while handling compositionality, missingness, and batch structure as needed.",
+    "expected_output_type": "structured_plan_and_tool_trace",
+    "user_question": "Recommend a glycomics workflow for task_family=paired_coupled, complexity_tier=simple, signal_regime=moderate, scenario_type=paired_coupled_mixed."
+  },
+  "available_tools": [
+    {
+      "name": "inspect_dataset",
+      "description": "Summarize matrix shape, missingness, compositionality hints, and metadata availability.",
+      "required_inputs": [
+        "input_csv (abundance or clr matrix)",
+        "metadata_csv"
+      ],
+      "key_params": []
+    },
+    {
+      "name": "impute_missing_values",
+      "description": "Impute missing values before CLR/DE when missingness is present.",
+      "required_inputs": [
+        "input_csv"
+      ],
+      "key_params": [
+        "strategy: median | left_censored_small_value"
+      ]
+    },
+    {
+      "name": "clr_transform",
+      "description": "CLR transform for compositional glycomics (samples=rows, features=columns by default).",
+      "required_inputs": [
+        "input_csv"
+      ],
+      "key_params": [
+        "pseudocount",
+        "samples_are_rows"
+      ]
+    },
+    {
+      "name": "check_batch_effect",
+      "description": "Proxy metrics for batch structure vs biological groups.",
+      "required_inputs": [
+        "input_csv",
+        "metadata_csv"
+      ],
+      "key_params": []
+    },
+    {
+      "name": "run_combat",
+      "description": "Batch correction (simplified proxy). Uses metadata batch column; optional bio covariate.",
+      "required_inputs": [
+        "input_csv",
+        "metadata_csv"
+      ],
+      "key_params": [
+        "use_bio_covariate"
+      ]
+    },
+    {
+      "name": "run_ratio_combat",
+      "description": "Ratio-based batch adjustment (simplified proxy).",
+      "required_inputs": [
+        "input_csv",
+        "metadata_csv"
+      ],
+      "key_params": []
+    },
+    {
+      "name": "run_percentile_norm",
+      "description": "Per-batch percentile normalization (simplified proxy).",
+      "required_inputs": [
+        "input_csv",
+        "metadata_csv"
+      ],
+      "key_params": []
+    },
+    {
+      "name": "run_limma_batch_removal",
+      "description": "OLS dummy-variable batch removal per feature (simplified proxy, not full limma).",
+      "required_inputs": [
+        "input_csv",
+        "metadata_csv"
+      ],
+      "key_params": []
+    },
+    {
+      "name": "run_harmony",
+      "description": "Iterative batch correction placeholder (simplified proxy, not full Harmony).",
+      "required_inputs": [
+        "input_csv",
+        "metadata_csv"
+      ],
+      "key_params": []
+    },
+    {
+      "name": "run_differential_expression",
+      "description": "Univariate DE (t-test) with ranking; use after preprocessing.",
+      "required_inputs": [
+        "input_csv",
+        "metadata_csv"
+      ],
+      "key_params": [
+        "alpha",
+        "group_col",
+        "input_space"
+      ]
+    },
+    {
+      "name": "run_motif_enrichment",
+      "description": "Motif enrichment placeholder; outputs status=placeholder until real library is wired.",
+      "required_inputs": [
+        "input_csv (typically DE table)"
+      ],
+      "key_params": []
+    },
+    {
+      "name": "run_pca",
+      "description": "PCA explained variance summary for QC.",
+      "required_inputs": [
+        "input_csv"
+      ],
+      "key_params": []
+    }
+  ],
+  "constraints": {
+    "hidden_truth_forbidden": true,
+    "max_steps": 20,
+    "must_output_json_plan": true
+  },
+  "properties": {
+    "contains_abundance": true,
+    "contains_clr": true,
+    "contains_metadata": true,
+    "contains_feature_metadata": true
+  },
+  "generation": {
+    "requested_mode": "paired_coupled_templated",
+    "actual_mode": "single_proxy_from_paired_coupled_templated",
+    "base_mode": "templated",
+    "params": {
+      "n_glycans": 80,
+      "n_H": 20,
+      "n_U": 20,
+      "n_batches": 2,
+      "missing_fraction": 0.207592,
+      "mnar_bias": 2.187011,
+      "kappa_mu": 0.501963,
+      "var_b": 0.350784,
+      "bio_strength": 1.649645
+    },
+    "seed": 20260879,
+    "blueprint_index": 22,
+    "quality_flags": {
+      "original_data": {
+        "pca_variance_explained": 0.46933411864332164,
+        "bio_effect": {
+          "f_statistic": 21.774193548387103,
+          "p_value": 3.0669777654622633e-06,
+          "effect_size_eta2": 0.7163515016685208,
+          "centroid_distance": 6.1648400341318315,
+          "strength": "STRONG",
+          "strength_description": "Large effect (eta²=71.6% >= 14%)"
+        }
+      },
+      "Y_clean": {
+        "pca_variance_explained": 0.16007942612963244,
+        "bio_effect": {
+          "f_statistic": 1.685853658536601,
+          "p_value": 0.19414845126597277,
+          "effect_size_eta2": 0.017585991244528233,
+          "centroid_distance": 2.0299768664650464,
+          "strength": "ABSENT",
+          "strength_description": "No significant signal (p=1.941e-01 >= 0.05)"
+        }
+      },
+      "Y_with_batch": {
+        "pca_variance_explained": 0.1297290158326438,
+        "batch_effect": {
+          "f_statistic": 1.1164245804975272,
+          "p_value": 0.2973609400586117,
+          "test_used": "ANOVA",
+          "effect_size_eta2": 0.0292728914790241
+        },
+        "bio_effect": {
+          "f_statistic": 0.5441297427750281,
+          "p_value": 0.4652571825658331,
+          "effect_size_eta2": 0.014479034581554615,
+          "centroid_distance": 2.9301311218055996,
+          "strength": "ABSENT",
+          "strength_description": "No significant signal (p=4.653e-01 >= 0.05)"
+        },
+        "pvca": {
+          "batch_variance_pct": 4.008740613916499,
+          "bio_variance_pct": 3.037097126609732,
+          "residual_variance_pct": 92.95416225947376
+        },
+        "overall_quality": {
+          "severity": "NONE",
+          "severity_description": "Negligible batch effect (batch explains 4.0% of variance)",
+          "decision_basis": "PVCA variance decomposition",
+          "median_variance_explained_by_batch": 0.02045489192684462
+        }
+      },
+      "missingness": {
+        "total_missing": 664,
+        "missing_fraction_actual": 0.2075,
+        "missing_fraction_target": 0.207592,
+        "per_sample_missing": [
+          7,
+          7,
+          5,
+          5,
+          8,
+          5,
+          12,
+          12,
+          8,
+          12,
+          5,
+          12,
+          9,
+          8,
+          9,
+          9,
+          7,
+          9,
+          7,
+          7,
+          14,
+          6,
+          7,
+          8,
+          7,
+          11,
+          4,
+          11,
+          7,
+          6,
+          3,
+          13,
+          8,
+          11,
+          5,
+          4,
+          12,
+          7,
+          16,
+          13,
+          7,
+          6,
+          12,
+          6,
+          12,
+          9,
+          3,
+          6,
+          11,
+          9,
+          10,
+          7,
+          11,
+          9,
+          9,
+          9,
+          13,
+          4,
+          11,
+          4,
+          12,
+          10,
+          9,
+          10,
+          6,
+          7,
+          9,
+          8,
+          8,
+          3,
+          8,
+          8,
+          8,
+          11,
+          6,
+          7,
+          8,
+          5,
+          9,
+          8
+        ],
+        "missing_rate_by_intensity": {
+          "<0.01%": 0.29277566539923955,
+          "0.01-0.1%": 0.26570915619389585,
+          "0.1-1%": 0.23788546255506607,
+          ">1%": 0.11296660117878192
+        },
+        "mnar_bias": 2.187011
+      }
+    },
+    "degradation": {
+      "paired_coupled": "requested_but_installed_glycoforge_has_no_simulate_paired"
+    }
+  }
+}

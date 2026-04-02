@@ -1,0 +1,144 @@
+{
+  "dataset_id": "gf_case_0165",
+  "task_family": "single_workflow",
+  "complexity_tier": "hard",
+  "signal_regime": "absent_or_weak",
+  "true_conditions": {
+    "batch_injected": false,
+    "missingness_injected": true,
+    "bio_strength": 0.4147,
+    "batch_strength": 0.067143,
+    "missing_fraction_target": 0.310347,
+    "mnar_bias": 1.893281,
+    "motif_driven": false,
+    "paired_or_coupled_requested": false,
+    "paired_or_coupled_realized": false,
+    "confounded_signal": false
+  },
+  "true_labels": {
+    "bio_labels": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "batch_labels": [
+      0,
+      1,
+      1,
+      0,
+      1,
+      0,
+      1,
+      0,
+      0,
+      1,
+      0,
+      1,
+      1,
+      1,
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+      1,
+      1,
+      0,
+      0
+    ]
+  },
+  "true_differential": {
+    "feature_ids": [
+      "G031",
+      "G058",
+      "G023",
+      "G014",
+      "G036",
+      "G060",
+      "G019",
+      "G069",
+      "G004",
+      "G066",
+      "G047",
+      "G011",
+      "G012",
+      "G003",
+      "G040",
+      "G035",
+      "G076",
+      "G049",
+      "G052",
+      "G041"
+    ],
+    "ranked": [
+      "G031",
+      "G058",
+      "G023",
+      "G014",
+      "G036",
+      "G060",
+      "G019",
+      "G069",
+      "G004",
+      "G066",
+      "G047",
+      "G011",
+      "G012",
+      "G003",
+      "G040",
+      "G035",
+      "G076",
+      "G049",
+      "G052",
+      "G041"
+    ],
+    "effect_level": "glycan"
+  },
+  "true_workflow_tags": {
+    "needs_imputation": true,
+    "needs_clr": true,
+    "needs_batch_correction": false,
+    "recommended_batch_family": "none",
+    "should_preserve_bio_covariate": true
+  },
+  "scoring_targets": {
+    "expected_plan_requirements": [
+      "include_clr_before_de_for_compositional_data",
+      "impute_when_missing",
+      "optional_batch"
+    ],
+    "disallowed_plan_patterns": [
+      "run_differential_expression.*run_combat"
+    ]
+  },
+  "generation": {
+    "requested_mode": "templated",
+    "actual_mode": "templated",
+    "degradation": {}
+  },
+  "glycoforge_metadata": {
+    "path": "glycoforge_metadata.json"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "task_id": "gf_case_0539",
+  "task_type": "workflow_recommendation",
+  "task_family": "paired_coupled",
+  "complexity_tier": "moderate",
+  "signal_regime": "moderate",
+  "task_description": "Recommend a workflow that respects paired or coupled sampling structure when possible and states fallback handling if pairing is imperfect.",
+  "analysis_goal": "Identify differential glycan signals between two biological conditions while handling compositionality, missingness, and batch structure as needed.",
+  "data_files": {
+    "abundance": "abundance.csv",
+    "sample_metadata": "sample_metadata.csv",
+    "feature_metadata": "feature_metadata.csv"
+  },
+  "known_constraints": {
+    "data_type": "relative_abundance_glycomics",
+    "compositionally_closed": true,
+    "missing_values_present": true,
+    "missingness_pattern": "mnar_left_censored",
+    "batch_labels_available": true,
+    "batch_structure_expected": true,
+    "paired_or_coupled_requested": true,
+    "motif_driven_signal_requested": false,
+    "scenario_type": "paired_coupled_mixed",
+    "missing_fraction": 0.31825,
+    "n_batches": 3,
+    "condition_labels_available": true,
+    "n_conditions": 2
+  },
+  "schema": {
+    "sample_id_col": "sample_id",
+    "group_col": "group_label",
+    "batch_col": "batch_label"
+  },
+  "expected_output": {
+    "type": "structured_workflow_plan",
+    "must_include": [
+      "ordered_tool_sequence",
+      "parameter_choices",
+      "rationale"
+    ]
+  }
+}
